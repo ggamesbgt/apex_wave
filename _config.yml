@@ -7,3 +7,6 @@ markdown: kramdown
 collections:
   agent_logs:
     output: true
+
+  kpi_reports:
+    output: true
