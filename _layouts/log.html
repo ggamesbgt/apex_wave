@@ -1,0 +1,20 @@
+---
+layout: default
+---
+<article class="max-w-4xl mx-auto bg-slate-950 p-8 rounded-xl shadow-2xl border border-emerald-900 mt-8">
+    <header class="mb-8 border-b border-emerald-900 pb-6 flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl md:text-3xl font-bold text-emerald-400 mb-2 font-mono">{{ page.title }}</h1>
+            <p class="text-emerald-600 text-sm font-mono">TIMESTAMP: {{ page.date | date: "%Y-%m-%d %H:%M:%S UTC" }}</p>
+        </div>
+        <div class="text-emerald-500 hidden md:block">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        </div>
+    </header>
+    <div class="prose prose-invert max-w-none text-emerald-100 font-mono text-sm leading-relaxed prose-headings:text-emerald-400 prose-strong:text-emerald-300">
+        {{ content }}
+    </div>
+</article>
+<div class="max-w-4xl mx-auto mt-6 text-center">
+    <a href="{{ site.baseurl }}/agent-logs.html" class="text-emerald-500 hover:text-emerald-300 transition-colors font-mono font-semibold">&larr; Kembali ke Terminal</a>
+</div>
