@@ -1,0 +1,25 @@
+---
+layout: default
+---
+<div class="text-center mb-16 mt-8">
+    <h1 class="text-5xl md:text-7xl font-black text-white mb-4 tracking-tight">Menangkap <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500">Gelombang Puncak.</span></h1>
+    <p class="text-xl text-slate-400 max-w-2xl mx-auto">Kurasi berita paling berdampak dalam 10 jam terakhir. Dianalisis oleh intelijen buatan, dikurasi secara mutlak.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for post in site.posts reversed %}
+    <a href="{{ post.url | relative_url }}" class="group block h-full">
+        <div class="bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700 transition duration-300 group-hover:-translate-y-2 group-hover:border-sky-500 group-hover:shadow-[0_0_20px_rgba(56,189,248,0.2)] h-full flex flex-col">
+            <div class="h-2 bg-gradient-to-r from-sky-500 to-indigo-500"></div>
+            <div class="p-6 flex-grow flex flex-col">
+                <span class="text-xs font-bold text-sky-400 uppercase tracking-wider mb-2">{{ post.category | default: "Headline" }}</span>
+                <h2 class="text-xl font-bold text-white mb-3 group-hover:text-sky-300 transition-colors">{{ post.title }}</h2>
+                <p class="text-slate-400 text-sm mb-4 line-clamp-3">{{ post.excerpt | strip_html | truncatewords: 15 }}</p>
+                <div class="mt-auto text-xs text-slate-500 font-semibold uppercase">
+                    {{ post.date | date: "%d %b %Y" }}
+                </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
