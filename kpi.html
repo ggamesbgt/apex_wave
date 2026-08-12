@@ -5,7 +5,7 @@ title: Indikator Kinerja Agen (KPI)
 <div class="text-center mb-12 mt-8">
     <h1 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight font-mono">Evaluasi <span class="text-amber-400">Kinerja Per Agen</span></h1>
     <p class="text-slate-400 max-w-3xl mx-auto text-sm md:text-base">
-        Dashboard <i>Observability & Audit Trail</i>. Memantau konsistensi dan rekam jejak (Track Record) masing-masing AI Agent lintas-tugas (Task-to-Task) untuk memastikan mereka tetap fokus pada SOP dan persona yang ditetapkan.
+        Dashboard <i>Observability & Audit Trail</i>. Memantau konsistensi, rekam jejak, dan <b>Skor Performa</b> masing-masing AI Agent lintas-tugas.
     </p>
 </div>
 
@@ -25,14 +25,15 @@ title: Indikator Kinerja Agen (KPI)
         </div>
         
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse min-w-[1000px]">
+            <table class="w-full text-left border-collapse min-w-[1100px]">
                 <thead>
                     <tr class="bg-slate-800 text-slate-300 text-xs uppercase tracking-wider font-mono">
-                        <th class="p-4 border-b border-slate-700 w-[15%]">Run ID & Waktu</th>
-                        <th class="p-4 border-b border-slate-700 w-[25%]">Thought Process (Pikiran)</th>
-                        <th class="p-4 border-b border-slate-700 w-[20%]">Tindakan / Action</th>
-                        <th class="p-4 border-b border-slate-700 w-[20%]">Sumber Informasi</th>
-                        <th class="p-4 border-b border-slate-700 w-[20%]">Output / Hasil Akhir</th>
+                        <th class="p-4 border-b border-slate-700 w-[12%]">Run ID & Waktu</th>
+                        <th class="p-4 border-b border-slate-700 w-[20%]">Thought Process</th>
+                        <th class="p-4 border-b border-slate-700 w-[18%]">Tindakan / Action</th>
+                        <th class="p-4 border-b border-slate-700 w-[15%]">Sumber</th>
+                        <th class="p-4 border-b border-slate-700 w-[20%]">Output / Hasil</th>
+                        <th class="p-4 border-b border-slate-700 w-[15%]">Skor & Evaluasi</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm text-slate-300 divide-y divide-slate-700/50">
@@ -40,26 +41,34 @@ title: Indikator Kinerja Agen (KPI)
                         {% for agent in report.agents %}
                             {% if agent.name == target_agent %}
                             <tr class="hover:bg-slate-800/70 transition-colors group">
-                                <!-- Run ID & Waktu -->
                                 <td class="p-4 align-top border-r border-slate-700/30 bg-slate-900/50">
                                     <span class="font-bold text-amber-400 block mb-1 font-mono text-xs">{{ report.run_id }}</span>
                                     <span class="text-[10px] text-slate-500 font-mono tracking-wider">{{ report.date | date: "%d %b %Y %H:%M" }}</span>
                                 </td>
-                                <!-- Thought Process -->
                                 <td class="p-4 align-top italic text-slate-400 border-r border-slate-700/30 leading-relaxed">
                                     "{{ agent.thought }}"
                                 </td>
-                                <!-- Tindakan -->
                                 <td class="p-4 align-top border-r border-slate-700/30 leading-relaxed">
                                     {{ agent.action }}
                                 </td>
-                                <!-- Sumber -->
                                 <td class="p-4 align-top font-mono text-xs text-indigo-400 border-r border-slate-700/30 break-words">
                                     {{ agent.source }}
                                 </td>
-                                <!-- Output -->
-                                <td class="p-4 align-top text-emerald-400 font-medium leading-relaxed">
+                                <td class="p-4 align-top text-emerald-400 font-medium leading-relaxed border-r border-slate-700/30">
                                     {{ agent.output }}
+                                </td>
+                                <td class="p-4 align-top bg-slate-900/30">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        {% if agent.score >= 90 %}
+                                            <span class="px-2 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 rounded font-bold text-lg">{{ agent.score }}</span>
+                                        {% elsif agent.score >= 75 %}
+                                            <span class="px-2 py-1 bg-amber-500/20 text-amber-400 border border-amber-500/50 rounded font-bold text-lg">{{ agent.score }}</span>
+                                        {% else %}
+                                            <span class="px-2 py-1 bg-rose-500/20 text-rose-400 border border-rose-500/50 rounded font-bold text-lg">{{ agent.score }}</span>
+                                        {% endif %}
+                                        <span class="text-[10px] uppercase text-slate-500">/ 100</span>
+                                    </div>
+                                    <p class="text-xs text-slate-400 italic">"{{ agent.evaluation }}"</p>
                                 </td>
                             </tr>
                             {% endif %}
