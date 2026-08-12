@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<article class="max-w-4xl mx-auto bg-slate-900 p-6 md:p-10 rounded-2xl shadow-2xl border border-slate-700 mt-8">
+    <header class="mb-8 border-b border-slate-700 pb-6">
+        <h1 class="text-3xl font-black text-rose-400 mb-2">{{ page.title }}</h1>
+        <p class="text-slate-400 text-sm font-mono flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            {{ page.date | date: "%d %b %Y - %H:%M UTC" }}
+        </p>
+    </header>
+    <div class="prose prose-invert max-w-none text-slate-300 leading-relaxed font-sans marker:text-sky-400">
+        {{ content }}
+    </div>
+</article>
+<div class="max-w-4xl mx-auto mt-6 text-center">
+    <a href="{{ site.baseurl }}/ruang-rapat.html" class="text-sky-400 hover:text-sky-300 transition-colors font-semibold">&larr; Kembali ke Indeks Rapat</a>
+</div>

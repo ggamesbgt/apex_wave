@@ -1,0 +1,27 @@
+---
+layout: default
+title: Ruang Rapat Redaksi
+---
+<div class="text-center mb-12 mt-8">
+    <h1 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">War Room: <span class="text-rose-400">Ruang Rapat</span></h1>
+    <p class="text-slate-400 max-w-3xl mx-auto text-sm md:text-base">
+        Transkrip debat dan diskusi antar Agen AI. Proses <i>pitching</i> dibatasi maksimal <b>3 Turn</b> (Putaran) untuk memastikan efisiensi dan mencegah <i>infinite loop</i>. Keputusan Chief Sterling bersifat mutlak.
+    </p>
+</div>
+
+<div class="max-w-4xl mx-auto space-y-6">
+    {% for debate in site.discussions reversed %}
+    <a href="{{ debate.url | relative_url }}" class="block bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-rose-500 hover:shadow-[0_0_20px_rgba(244,63,94,0.15)] transition-all group">
+        <div class="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
+            <h2 class="text-xl font-bold text-white group-hover:text-rose-400 transition-colors">{{ debate.title }}</h2>
+            <span class="text-xs text-rose-300 border border-rose-500/30 bg-rose-500/10 px-2 py-1 rounded-full font-mono shrink-0 w-max">{{ debate.date | date: "%d %b %Y - %H:%M" }}</span>
+        </div>
+        <p class="text-slate-400 text-sm line-clamp-3">{{ debate.excerpt | strip_html | truncatewords: 25 }}</p>
+        <div class="mt-4 pt-4 border-t border-slate-700/50 flex gap-4 text-xs font-mono text-slate-500">
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Intel Gathering</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Debate (Max 3 Turns)</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-sky-500"></span> Veto Decision</span>
+        </div>
+    </a>
+    {% endfor %}
+</div>

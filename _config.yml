@@ -10,3 +10,6 @@ collections:
 
   kpi_reports:
     output: true
+
+  discussions:
+    output: true
