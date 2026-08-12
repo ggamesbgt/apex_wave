@@ -3,23 +3,24 @@ layout: default
 title: Indikator Kinerja Agen (KPI)
 ---
 <div class="text-center mb-12 mt-8">
-    <h1 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight font-mono">Evaluasi <span class="text-amber-400">Kinerja Agen</span></h1>
+    <h1 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight font-mono">Evaluasi <span class="text-amber-400">Kinerja Per Agen</span></h1>
     <p class="text-slate-400 max-w-3xl mx-auto text-sm md:text-base">
-        Dashboard <i>Observability & Audit Trail</i>. Memantau secara transparan apa yang dipikirkan, dikerjakan, dan dihasilkan oleh masing-masing AI Agent pada setiap siklus operasional Apex Wave.
+        Dashboard <i>Observability & Audit Trail</i>. Memantau konsistensi dan rekam jejak (Track Record) masing-masing AI Agent lintas-tugas (Task-to-Task) untuk memastikan mereka tetap fokus pada SOP dan persona yang ditetapkan.
     </p>
 </div>
 
-<div class="max-w-[95%] mx-auto space-y-12">
-    {% for report in site.kpi_reports reversed %}
+{% assign agent_names = "Vance, Fiona, Cipher, Chief Sterling, Lyra, Dexter" | split: ", " %}
+
+<div class="max-w-[95%] mx-auto space-y-16">
+    {% for target_agent in agent_names %}
     <div class="bg-slate-900 rounded-xl border border-slate-700 overflow-hidden shadow-2xl">
-        <div class="bg-slate-950 px-6 py-4 border-b border-slate-700 flex flex-col md:flex-row justify-between items-center gap-4">
-            <h2 class="text-xl font-bold text-amber-400 font-mono flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                ID Run: {{ report.run_id }}
+        <div class="bg-slate-950 px-6 py-5 border-b border-slate-700 flex flex-col md:flex-row justify-between items-center gap-4">
+            <h2 class="text-2xl font-bold text-sky-400 font-mono flex items-center gap-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                AGEN: {{ target_agent | upcase }}
             </h2>
-            <span class="text-xs font-mono text-emerald-400 bg-emerald-950 border border-emerald-900 px-3 py-1.5 rounded-full flex items-center gap-1">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                TANGGAL EKSEKUSI: {{ report.date | date: "%d %b %Y - %H:%M UTC" }}
+            <span class="text-xs font-mono text-slate-500 bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-full">
+                HISTORY LOG (TIME-SERIES)
             </span>
         </div>
         
@@ -27,38 +28,42 @@ title: Indikator Kinerja Agen (KPI)
             <table class="w-full text-left border-collapse min-w-[1000px]">
                 <thead>
                     <tr class="bg-slate-800 text-slate-300 text-xs uppercase tracking-wider font-mono">
-                        <th class="p-4 border-b border-slate-700 w-[15%]">Nama Agen</th>
+                        <th class="p-4 border-b border-slate-700 w-[15%]">Run ID & Waktu</th>
                         <th class="p-4 border-b border-slate-700 w-[25%]">Thought Process (Pikiran)</th>
                         <th class="p-4 border-b border-slate-700 w-[20%]">Tindakan / Action</th>
                         <th class="p-4 border-b border-slate-700 w-[20%]">Sumber Informasi</th>
-                        <th class="p-4 border-b border-slate-700 w-[20%]">Output / Hasil</th>
+                        <th class="p-4 border-b border-slate-700 w-[20%]">Output / Hasil Akhir</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm text-slate-300 divide-y divide-slate-700/50">
-                    {% for agent in report.agents %}
-                    <tr class="hover:bg-slate-800/70 transition-colors group">
-                        <!-- Nama Agen -->
-                        <td class="p-4 align-top border-r border-slate-700/30 bg-slate-900/50">
-                            <span class="font-bold text-sky-400 block mb-1 text-base">{{ agent.name }}</span>
-                            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono border border-slate-700 px-1.5 py-0.5 rounded">{{ agent.role }}</span>
-                        </td>
-                        <!-- Thought Process -->
-                        <td class="p-4 align-top italic text-slate-400 border-r border-slate-700/30">
-                            "{{ agent.thought }}"
-                        </td>
-                        <!-- Tindakan -->
-                        <td class="p-4 align-top border-r border-slate-700/30">
-                            {{ agent.action }}
-                        </td>
-                        <!-- Sumber -->
-                        <td class="p-4 align-top font-mono text-xs text-indigo-400 border-r border-slate-700/30 break-words">
-                            {{ agent.source }}
-                        </td>
-                        <!-- Output -->
-                        <td class="p-4 align-top text-emerald-400 font-medium">
-                            {{ agent.output }}
-                        </td>
-                    </tr>
+                    {% for report in site.kpi_reports reversed %}
+                        {% for agent in report.agents %}
+                            {% if agent.name == target_agent %}
+                            <tr class="hover:bg-slate-800/70 transition-colors group">
+                                <!-- Run ID & Waktu -->
+                                <td class="p-4 align-top border-r border-slate-700/30 bg-slate-900/50">
+                                    <span class="font-bold text-amber-400 block mb-1 font-mono text-xs">{{ report.run_id }}</span>
+                                    <span class="text-[10px] text-slate-500 font-mono tracking-wider">{{ report.date | date: "%d %b %Y %H:%M" }}</span>
+                                </td>
+                                <!-- Thought Process -->
+                                <td class="p-4 align-top italic text-slate-400 border-r border-slate-700/30 leading-relaxed">
+                                    "{{ agent.thought }}"
+                                </td>
+                                <!-- Tindakan -->
+                                <td class="p-4 align-top border-r border-slate-700/30 leading-relaxed">
+                                    {{ agent.action }}
+                                </td>
+                                <!-- Sumber -->
+                                <td class="p-4 align-top font-mono text-xs text-indigo-400 border-r border-slate-700/30 break-words">
+                                    {{ agent.source }}
+                                </td>
+                                <!-- Output -->
+                                <td class="p-4 align-top text-emerald-400 font-medium leading-relaxed">
+                                    {{ agent.output }}
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
                     {% endfor %}
                 </tbody>
             </table>
